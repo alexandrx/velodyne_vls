@@ -16,7 +16,7 @@
 #include <pluginlib/class_list_macros.h>
 #include <nodelet/nodelet.h>
 
-#include "convert.h"
+#include "velodyne_pointcloud/convert.h"
 
 namespace velodyne_pointcloud
 {
@@ -36,7 +36,7 @@ namespace velodyne_pointcloud
   /** @brief Nodelet initialization. */
   void CloudNodelet::onInit()
   {
-    conv_.reset(new Convert(getNodeHandle(), getPrivateNodeHandle()));
+    conv_.reset(new Convert(getNodeHandle(), getPrivateNodeHandle(), getName()));
   }
 
 } // namespace velodyne_pointcloud

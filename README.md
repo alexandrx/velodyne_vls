@@ -1,10 +1,22 @@
-Repository for VelodyneLiDAR VLS sensors (It currently supports VLS-128).
+[![CircleCI](https://circleci.com/gh/ros-drivers/velodyne.svg?style=svg)](https://circleci.com/gh/ros-drivers/velodyne)
 
-The code is highly leveraged from https://github.com/ros-drivers/velodyne. 
+Overview
+========
 
-This code is only tested in ROS Kinetic.
+Velodyne<sup>1</sup> is a collection of ROS<sup>2</sup> packages supporting `Velodyne high
+definition 3D LIDARs`<sup>3</sup>.
 
-Compile instruction:
-```
-catkin_make -DCMAKE_BUILD=Release
-```
+**Warning**:
+
+  The master branch normally contains code being tested for the next
+  ROS release.  It will not always work with every previous release.
+  To check out the source for the most recent release, check out the
+  tag `velodyne-<version>` with the highest version number.
+
+The current ``master`` branch works with ROS Indigo and Kinetic.
+CI builds are currently run for Lunar and Melodic but extensive
+testing has not been completed in those environments.
+
+- <sup>1</sup>Velodyne: http://www.ros.org/wiki/velodyne
+- <sup>2</sup>ROS: http://www.ros.org
+- <sup>3</sup>`Velodyne high definition 3D LIDARs`: http://www.velodynelidar.com/lidar/lidar.aspx

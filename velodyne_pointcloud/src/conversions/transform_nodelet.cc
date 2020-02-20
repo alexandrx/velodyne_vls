@@ -8,7 +8,7 @@
 /** @file
 
     This ROS nodelet transforms raw Velodyne 3D LIDAR packets to a
-    PointCloud2 in the /odom frame.
+    PointCloud2 in the /map frame.
 
 */
 
@@ -16,7 +16,7 @@
 #include <pluginlib/class_list_macros.h>
 #include <nodelet/nodelet.h>
 
-#include "transform.h"
+#include "velodyne_pointcloud/transform.h"
 
 namespace velodyne_pointcloud
 {
@@ -36,7 +36,7 @@ namespace velodyne_pointcloud
   /** @brief Nodelet initialization. */
   void TransformNodelet::onInit()
   {
-    tf_.reset(new Transform(getNodeHandle(), getPrivateNodeHandle()));
+    tf_.reset(new Transform(getNodeHandle(), getPrivateNodeHandle(), getName()));
   }
 
 } // namespace velodyne_pointcloud

@@ -1,4 +1,4 @@
-// Copyright (C) 2018, 2019 Kevin Hallenbeck, Joshua Whitley
+// Copyright (C) 2012, 2019 Austin Robot Technology, Jack O'Quin, Joshua Whitley, Sebastian Pütz
 // All rights reserved.
 //
 // Software License Agreement (BSD License 2.0)
@@ -30,20 +30,32 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <ros/ros.h>
-#include "velodyne_laserscan/velodyne_laserscan.h"
+#ifndef VELODYNE_POINTCLOUD_ORGANIZED_CLOUDXYZIR_H
+#define VELODYNE_POINTCLOUD_ORGANIZED_CLOUDXYZIR_H
 
-int main(int argc, char** argv)
+#include <velodyne_pointcloud/datacontainerbase.h>
+#include <sensor_msgs/point_cloud2_iterator.h>
+#include <string>
+
+namespace velodyne_pointcloud
 {
-  ros::init(argc, argv, "velodyne_laserscan_node");
-  ros::NodeHandle nh;
-  ros::NodeHandle nh_priv("~");
+class OrganizedCloudXYZIR : public velodyne_rawdata::DataContainerBase
+{
+public:
+  OrganizedCloudXYZIR(const double max_range, const double min_range, const std::string& target_frame,
+                      const std::string& fixed_frame, const unsigned int num_lasers, const unsigned int scans_per_block,
+                      boost::shared_ptr<tf::TransformListener> tf_ptr = boost::shared_ptr<tf::TransformListener>());
 
-  // create VelodyneLaserScan class
-  velodyne_laserscan::VelodyneLaserScan n(nh, nh_priv);
+  virtual void newLine();
 
-  // handle callbacks until shut down
-  ros::spin();
+  virtual void setup(const velodyne_msgs::VelodyneScan::ConstPtr& scan_msg);
 
-  return 0;
-}
+  virtual void addPoint(float x, float y, float z, const uint16_t ring, const uint16_t azimuth, const float distance,
+                        const float intensity, const float time);
+
+private:
+  sensor_msgs::PointCloud2Iterator<float> iter_x, iter_y, iter_z, iter_intensity, iter_time;
+  sensor_msgs::PointCloud2Iterator<uint16_t> iter_ring;
+};
+} /* namespace velodyne_pointcloud */
+#endif  // VELODYNE_POINTCLOUD_ORGANIZED_CLOUDXYZIR_H
